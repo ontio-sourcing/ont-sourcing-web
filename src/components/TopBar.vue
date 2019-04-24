@@ -58,12 +58,12 @@ export default {
       }
       else{
         var result = this.$route.query.result;
-        console.log(result);
         if(result){
           var response = JSON.parse(decodeURIComponent(result));
           console.log(response);
           sessionStorage.setItem("user_ontid",response.user_ontid);
           sessionStorage.setItem("access_token",response.access_token);
+          this.username = sessionStorage.getItem("user_ontid");
         }
       }
   }

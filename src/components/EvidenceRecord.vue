@@ -123,7 +123,7 @@ export default {
             });
         },
         back(){
-            this.$router.back();
+            this.$router.push({name:'newEvidence'});
         },
         exporto(){//导出
         /* generate workbook object from table */
