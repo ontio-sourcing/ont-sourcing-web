@@ -68,6 +68,7 @@ export default {
     background:unset;
     color: #409eff;
     border-color: #409eff;
+    width: unset !important;
 }
 </style>
 

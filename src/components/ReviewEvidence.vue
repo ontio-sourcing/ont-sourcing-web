@@ -28,7 +28,6 @@
 import TopBar from './TopBar'
 import data from './listContent.json'
 const sha256 = require("js-sha256").sha256;
-const keyList=['group','title','desc','authorName','authorOntid','images']
 export default {
     data(){
         return{
@@ -128,7 +127,7 @@ export default {
             var that = this;
             that.fullscreenLoading = true;
             console.log("存证：",that.newCunZheng);
-            that.$http.post('http://172.168.3.17:7088/api/v1/contract/put/batch',{
+            that.$http.post(process.env.API_ROOT+'api/v1/contract/put/batch',{
                 "user_ontid":this.ontId,
                 "access_token":this.access_token,
                 "filelist":that.newCunZheng

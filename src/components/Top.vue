@@ -101,7 +101,7 @@ export default {
             inputvalue:'',//输入框值
             listContent:[],//内容值
             // listContent:data,
-            allNum:'',//信息条数
+            allNum:0,//信息条数
             searchContent:[],
             loading:false,//搜索加载
             conloading:false,//首页列表加载
@@ -112,7 +112,7 @@ export default {
         //请求首页列表
         var that = this;
         that.conloading = true;
-        this.$http.post('http://172.168.3.17:7088/api/v1/contract/explorer',{
+        this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer',{
         "pageNum": 1,"pageSize": 10})
             .then(function (response) {
                 that.conloading = false;
@@ -129,7 +129,7 @@ export default {
             });
         this.intervalBlock = setInterval(()=>{
             // that.loading = !that.loading;
-            this.$http.post('http://172.168.3.17:7088/api/v1/contract/explorer',{
+            this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer',{
             "pageNum": 1,"pageSize": 10})
             .then(function (response) {
                 that.conloading = false;
@@ -157,7 +157,7 @@ export default {
             if(this.inputvalue != ''){
                 this.firstFlag = false;//变成search内容
                 that.loading = true;
-                this.$http.post('http://172.168.3.17:7088/api/v1/contract/explorer/hash',
+                this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer/hash',
                   {"hash":this.inputvalue})
                 .then(function (response) {
                     that.loading = false;
@@ -167,6 +167,7 @@ export default {
                         item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
                     })
                     that.allNum=response.data.result.length;
+                    console.log(that.allNum);
                 })
                 .catch(function (error) {
                     console.log(error);

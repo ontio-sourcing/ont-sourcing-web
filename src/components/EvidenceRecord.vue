@@ -6,51 +6,60 @@
                 <el-button type="primary" round @click="back">返回</el-button>
                 <el-button type="primary" icon="el-icon-download" round @click="exporto">导出</el-button>
             </div>
-            <div class="listDetail">
-                <p class="review">存证预览</p>
+            <div class="listDetail" v-loading="fullscreenLoading">
+                <p class="review">存证记录</p>
                 <el-table
                     id="rebateSetTable"
-                    v-loading.fullscreen.lock="fullscreenLoading"
                     :data="listDetail"
                     :border="false"
                     style="width: 100%">
                     <el-table-column
                     prop="txhash"
                     label="存证编号"
-                    width="180">
+                    width="300"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="createTime"
                     label="创建时间"
-                    width="180">
+                    width="300"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="height"
                     label="区块高度"
-                    width="180">
+                    width="100"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="timestamp"
                     label="时间戳"
-                    width="180">
+                    width="300"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="ontid"
                     label="存证者ONTID"
-                    width="180">
+                    width="400"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="companyOntid"
                     label="被存证者ONTID"
-                    width="180">
+                    width="400"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     prop="type"
-                    label="类型">
+                    label="类型"
+                    width="100"
+                    align="center">
                     </el-table-column>
                     <el-table-column
                     type="text"
-                    label="存证详情">
+                    label="存证详情"
+                    width="200"
+                    align="center">
                         <template slot-scope="scope">
                             <el-button @click="lookDetail(scope.$index)" type="text" size="small">点击查看</el-button>
                         </template>
@@ -103,7 +112,7 @@ export default {
     },
     methods:{
         getTotalNum(access_token){
-            this.$http.post('http://172.168.3.17:7088/api/v1/contract/count',{
+            this.$http.post(process.env.API_ROOT+'api/v1/contract/count',{
                 "access_token": this.access_token})
             .then((response)=> {
                 console.log(response);
@@ -147,7 +156,7 @@ export default {
             // this.$store.dispatch('getEvidenceRecord',params);
             this.fullscreenLoading = true;
             this.nowPage = val;
-            this.$http.post('http://172.168.3.17:7088/api/v1/contract/history',{
+            this.$http.post(process.env.API_ROOT+'api/v1/contract/history',{
                 "access_token": this.access_token,
                 "pageNum": this.nowPage,//页数
                 "pageSize": this.pageSize,//每页记录数 10以内 

@@ -1,11 +1,11 @@
 <template>
   <div id="topBar">
     <el-row type="flex" class="row-bg" justify="end" v-if="noLogin">
-      <el-col :span="16"><img src="../assets/img/Rectangle.png" alt=""></el-col>
+      <el-col :span="16"><img src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
       <el-col :span="8"><el-button type="info" size="mini" round @click="toLogin">我要存证</el-button></el-col>
     </el-row>
     <el-row type="flex" class="row-bg" justify="end" v-else>
-      <el-col :span="15"><img src="../assets/img/Rectangle.png" alt=""></el-col>
+      <el-col :span="15"><img src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
       <el-col :span="9" style="text-align:right;">
         <img src="../assets/img/avatar.png" style="width:3rem;" alt="">
         <span>{{username}}</span>
@@ -31,6 +31,9 @@ export default {
       var callback_url = 'http://127.0.0.1:8080/#/newEvidence';
       var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url+'&'+'zh');
       window.location.href = "http://139.219.136.188:10390?params="+value;
+    },
+    toHomePage(){//首页
+      this.$router.push({name:'Home'});
     },
     signOut(){//退出
       this.$confirm('确定退出当前登录吗？','提示', {
