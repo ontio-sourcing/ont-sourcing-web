@@ -17,11 +17,9 @@
                                         ref="upload"
                                         accept=".xls,.xlsx"
                                         action=""
-                                        limit="1"
+                                        :limit="1"
                                         :file-list="fileList"
                                         :on-change="readExcel"
-                                        :on-preview="handlePreview"
-                                        :on-remove="handleRemove"
                                         :auto-upload="false">
                                         <el-button round slot="trigger" size="small" type="primary">上传存证Excel</el-button>
                                     </el-upload>

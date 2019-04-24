@@ -25,10 +25,11 @@ export default {
   },
   methods:{
     toLogin(){//登录
+      var callback_url = window.location.origin+'/#/newEvidence';
       // var appontid = 'did:ont:ANDQ4CGTGqYcVPiSkb6z8bFkncq2kimnAs';
       var appontid = 'did:ont:ANqiHycikgyzkfz36faP5ymXLVg1uovhXh';
       var appname = 'OntSourcing';
-      var callback_url = 'http://127.0.0.1:8080/#/newEvidence';
+      // var callback_url = 'http://127.0.0.1:8080/#/newEvidence';
       var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url+'&'+'zh');
       window.location.href = "http://139.219.136.188:10390?params="+value;
     },

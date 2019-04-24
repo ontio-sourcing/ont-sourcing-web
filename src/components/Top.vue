@@ -149,6 +149,9 @@ export default {
     mounted() {
         this.access_token = sessionStorage.getItem('access_token');
     },
+    beforeDestroy() {
+      clearInterval(this.intervalBlock);
+    },
     methods:{
         //搜索内容
         search(){
