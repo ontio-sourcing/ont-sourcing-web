@@ -1,7 +1,7 @@
 <template>
     <div class="newCunzheng">
         <TopBar></TopBar>
-        <div class="cunZhengTab">
+        <div class="cunZhengTab" v-loading="loading">
             <el-tabs v-model="activeBar" type="card" @tab-click="changeTab">
                 <el-tab-pane label="新建存证" name="first">
                     <!-- 步骤条 -->
@@ -49,6 +49,7 @@ import XLSX from 'xlsx'
 export default {
     data(){
         return{
+            loading:false,
             activeBar:"first",//默认显示第一个
             fileList: [],//上传文件
             hasfile:true,//是否有文件上传
@@ -69,6 +70,7 @@ export default {
     },
     methods:{
         readExcel(file,fileList) {
+            this.loading = true;
             var fileReader = new FileReader();
             fileReader.onload = (ev) => {
                 try {
@@ -104,6 +106,9 @@ export default {
                             this.hasfile = true;
                         }
                     }
+                    setTimeout(()=>{
+                        this.loading = false;
+                    },3000);
                 } catch (e) {
                     
                 }
