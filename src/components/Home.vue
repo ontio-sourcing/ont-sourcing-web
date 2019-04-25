@@ -140,6 +140,7 @@ export default {
                     });
                 })
                 .catch((error)=> {
+                    this.conloading = false;
                     console.log(error);
                 });
         },
@@ -160,6 +161,7 @@ export default {
                     this.allNum=response.data.result.length;
                 })
                 .catch( (error) =>{
+                    this.loading = false;
                     console.log(error);
                 });
             }else{

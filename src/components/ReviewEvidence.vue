@@ -140,6 +140,7 @@ export default {
                 console.log(response);
             })
             .catch(function (error) {
+                that.fullscreenLoading = false;
                 console.log(error);
             });
         }

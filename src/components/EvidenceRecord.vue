@@ -175,6 +175,7 @@ export default {
                 
             })
             .catch( (error)=> {
+                this.fullscreenLoading = false;
                 console.log(error);
             });
             // console.log(`当前页: ${val}`);

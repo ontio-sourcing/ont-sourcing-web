@@ -150,6 +150,7 @@ export default {
             }
         })
         .catch( (error)=> {
+            this.fullscreenLoading = false;
             console.log(error);
         });
   }
