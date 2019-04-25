@@ -82,20 +82,19 @@
                     <div class="con">
                         <div>时间戳：<p>{{detailData.timestamp}}</p></div>
                     </div>
-                    <!-- <div class="con">
-                        <p>时间戳签名：<span class="timestampSign">{{detailData.timestampSign}}</span></p>
-                    </div> -->
                     <div class="con">
                         <div>存证哈希：<p>{{detailData.filehash}}</p></div>
                     </div>
-                    <div class="con" v-if="detailData.imgUrl != '' && detailData.type == 'IMAGE'">
-                        <div>详情：<p><a :href="detailData.imgUrl">{{detailData.imgUrl}}</a></p></div>
-                    </div>
-                    <div class="con" v-if="detailData.type == 'INDEX'">
-                        <div class="timestampSign">详情：
-                            <div class="detailList">
-                                <div v-for="item in workData" :key="item">
-                                    <p>{{item}}</p>
+                    <div class="con">
+                        <div>详情：
+                            <p  v-if="detailData.type == 'IMAGE'">
+                                <a :href="detailData.imgUrl">{{detailData.imgUrl}}</a>
+                            </p>
+                            <div class="timestampSign">
+                                <div class="detailList"  v-if="detailData.type == 'INDEX'">
+                                    <div v-for="item in workData" :key="item">
+                                        <p>{{item}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +135,9 @@ export default {
             this.detailData = response.data.result[0];
             this.detailData._createTime = this.detailData.createTime.split('T')[0];
             // this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
-            if(this.detailData.type == 'IMAGE'){//图片
+            if(this.detailData.type == ''){//类型为空
+                this.haveImg = false;
+            }else if(this.detailData.type == 'IMAGE'){//图片
                 this.haveImg = false;
                 this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
             }else if(this.detailData.type == 'INDEX'){//目录
@@ -146,12 +147,6 @@ export default {
                 for(var i in imgHashData){
                     this.workData.push(imgHashData[i]);//图片哈希
                 }
-                // for(var i = 0 ;i < this.workData.length; i++){
-                //     if(this.workData[i] == ''){//只要有一个不为空就显示图片
-                //          this.haveImg = false;
-                //          break;
-                //     }
-                // }
             }
         })
         .catch( (error)=> {
@@ -242,9 +237,9 @@ export default {
       width: 80%;
     }
     .timestampSign .detailList{
-        margin-bottom: 2rem !important;
+        /* margin-bottom: 2rem !important;
         margin-left: 15% !important;
-        margin-top: -5.5% !important;
+        margin-top: -5.5% !important; */
     }
 }
 @media only screen and (min-width:768px) and (max-width:1024px) {
@@ -255,9 +250,9 @@ export default {
         width: 90% !important;
     }
     .timestampSign .detailList{
-        margin-bottom: 2rem !important;
+        /* margin-bottom: 2rem !important;
         margin-left: 10% !important;
-        margin-top: -2rem !important;
+        margin-top: -2rem !important; */
     }
 }
 @media only screen and (min-width:428px) {
@@ -406,8 +401,8 @@ ul li{
     word-break: break-all;
 }
 .timestampSign .detailList{
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem;
     margin-left: 5rem;
-    margin-top: -2rem;
+    margin-top: -2rem; */
 }
 </style>

@@ -83,7 +83,7 @@ export default {
                                 }).then(() => {//确定
                                     this.fileList = [];
                                 }).catch(() => {
-                                    
+                                    this.fileList = [];
                                 });
                             }
                     }
