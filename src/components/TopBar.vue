@@ -42,7 +42,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {//确定
-          this.noLogin = !this.noLogin,//默认未登录
+          this.noLogin = true,//默认未登录
           sessionStorage.removeItem("ontid");
           this.toLogin();
         }).catch(() => {
@@ -53,7 +53,7 @@ export default {
   },
   mounted(){//得到token值保存session
       if(sessionStorage.getItem("user_ontid")){
-        this.noLogin = !this.noLogin;
+        this.noLogin = false;
         this.username = sessionStorage.getItem("user_ontid");  
       }
       else{
@@ -64,6 +64,7 @@ export default {
           sessionStorage.setItem("user_ontid",response.user_ontid);
           sessionStorage.setItem("access_token",response.access_token);
           this.username = sessionStorage.getItem("user_ontid");
+          this.noLogin = false;
         }
       }
   }
