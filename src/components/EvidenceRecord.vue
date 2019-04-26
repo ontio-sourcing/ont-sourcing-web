@@ -9,6 +9,8 @@
             <div class="listDetail" v-loading="fullscreenLoading">
                 <p class="review">存证记录</p>
                 <el-table
+                    :default-sort = "{prop: 'date', order: 'descending'}"
+                    class="my-table"
                     id="rebateSetTable"
                     :data="listDetail"
                     :border="false"
@@ -123,7 +125,7 @@ export default {
             });
         },
         back(){
-            this.$router.back();
+            this.$router.push({name:'newEvidence'});
         },
         exporto(){//导出
         /* generate workbook object from table */
@@ -166,10 +168,14 @@ export default {
                 this.fullscreenLoading = false;
                 console.log(response);
                 this.listDetail = response.data.result;
+                this.listDetail.forEach(item => {
+                    item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                });
                 // console.log(this.listDetail)
                 
             })
             .catch( (error)=> {
+                this.fullscreenLoading = false;
                 console.log(error);
             });
             // console.log(`当前页: ${val}`);
@@ -185,6 +191,14 @@ export default {
 }
 </script>
 <style scoped>
+.listDetail .my-table .el-table__body-wrapper::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.listDetail.my-table .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #409EFF;
+  border-radius: 2px;
+}
 .czDetailCon{
     width: 80%;
     margin: 0 auto;
@@ -214,6 +228,9 @@ export default {
 }
 .el-table th>.cell{
     color: #000;
+}
+.block{
+    margin-top: 2rem;
 }
 </style>
 

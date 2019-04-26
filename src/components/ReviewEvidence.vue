@@ -1,10 +1,9 @@
 <template>
     <div class="review">
         <TopBar></TopBar>
-        <div class="reviewContainer">
+        <div class="reviewContainer" v-loading="fullscreenLoading">
             <p class="review">存证预览</p>
             <el-table
-                v-loading.fullscreen.lock="fullscreenLoading"
                 :data="cunZhengList"
                 style="width: 100%">
                 <template v-for="item in tableHeader" :index="item">
@@ -141,6 +140,7 @@ export default {
                 console.log(response);
             })
             .catch(function (error) {
+                that.fullscreenLoading = false;
                 console.log(error);
             });
         }
