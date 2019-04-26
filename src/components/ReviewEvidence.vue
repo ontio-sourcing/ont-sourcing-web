@@ -138,15 +138,15 @@ export default {
                 "access_token":that.access_token,
                 "filelist":that.newCunZheng
             })
-            .then(function (response) {
+            .then( (response)=> {
                 that.fullscreenLoading = false;
-                if(response.data.error != '0'){
-                    this.$message({type:'error',message:error});
+                if(response.data.error != 0){
+                    this.$message({type:'error',message:response.data.desc});
                 }else{
                     that.$router.push({name:'confirm'});
                 }
             })
-            .catch(function (error) {
+            .catch( (error) =>{
                 that.fullscreenLoading = false;
                 this.$message({type:'error',message:error});
                 console.log(error);
