@@ -123,8 +123,7 @@ export default {
             }
         },
         download(){
-            console.log(process.env.fileUrl)
-            window.open(process.env.fileUrl);
+            window.open(window.location.origin+process.env.fileUrl);
         },
         toReview(){
             this.$router.push({name: 'reviewEvidence', params:{cunZheng: this.fileData}});

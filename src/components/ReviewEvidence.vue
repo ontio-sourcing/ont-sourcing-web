@@ -139,15 +139,11 @@ export default {
                 "filelist":that.newCunZheng
             })
             .then(function (response) {
+                that.fullscreenLoading = false;
                 if(response.data.error != '0'){
-                    that.fullscreenLoading = false;
                     this.$message({type:'error',message:error});
                 }else{
-                    setTimeout(() => {
-                        that.fullscreenLoading = false;
-                        that.$router.push({name:'confirm'});
-                    }, 2000);
-                    console.log(response);
+                    that.$router.push({name:'confirm'});
                 }
             })
             .catch(function (error) {
