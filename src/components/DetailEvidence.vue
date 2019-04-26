@@ -1,7 +1,7 @@
 <template>
     <div class="detailEvidence">
         <div class="topBar">
-            <img src="../assets/img/Rectangle.png" alt="" @click="toHomePage">
+            <img src="../assets/img/Rectangle.png" id="detailLogo" @mouseover="changeMask" alt="" @click="toHomePage">
         </div>
         <div class="detainCon" v-loading="fullscreenLoading">
             <div class="detailImg" v-if="haveImg">
@@ -119,7 +119,10 @@ export default {
   methods:{
       toHomePage(){
           this.$router.push({name:'Home'})
-      }
+      },
+      changeMask(){
+      document.getElementById("detailLogo").style.cursor="pointer"; 
+    },
   },
   mounted(){
       this.fullscreenLoading = true;
@@ -134,6 +137,7 @@ export default {
             console.log(response);
             this.detailData = response.data.result[0];
             this.detailData._createTime = this.detailData.createTime.split('T')[0];
+            this.detailData.createTime = this.detailData.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
             // this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
             if(this.detailData.type == ''){//类型为空
                 this.haveImg = false;
@@ -151,6 +155,7 @@ export default {
         })
         .catch( (error)=> {
             this.fullscreenLoading = false;
+            this.$message({type:'error',message:error});
             console.log(error);
         });
   }
@@ -237,11 +242,6 @@ export default {
       overflow: hidden;
       width: 80%;
     }
-    .timestampSign .detailList{
-        /* margin-bottom: 2rem !important;
-        margin-left: 15% !important;
-        margin-top: -5.5% !important; */
-    }
 }
 @media only screen and (min-width:768px) and (max-width:1024px) {
     html{
@@ -249,11 +249,6 @@ export default {
     }
     .detainCon{
         width: 90% !important;
-    }
-    .timestampSign .detailList{
-        /* margin-bottom: 2rem !important;
-        margin-left: 10% !important;
-        margin-top: -2rem !important; */
     }
 }
 @media only screen and (min-width:428px) {
@@ -400,10 +395,5 @@ ul li{
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
-}
-.timestampSign .detailList{
-    /* margin-bottom: 3rem;
-    margin-left: 5rem;
-    margin-top: -2rem; */
 }
 </style>

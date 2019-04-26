@@ -7,8 +7,11 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './vuex'
+import {Message} from 'element-ui'
+
 
 Vue.use(ElementUI)
+Vue.component(Message.name, Message)
 
 Vue.prototype.$http = axios
 

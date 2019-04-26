@@ -51,13 +51,20 @@ export default {
         let arr=[];//
         for(let i=1,len=_fileData.length;i<len;i++){
             let obj={};
-            for(let j=0,headLen=headerList.length;j<headLen;j++){
-            obj[headerList[j]]=_fileData[i][j]||'';
+            let c = _fileData[i].join("").trim();
+            if(!c){
+                continue;
             }
-            // if(obj['group'] != ''){
+            console.log(c);
+            for(let j=0,headLen=headerList.length;j<headLen;j++){
+                obj[headerList[j]]=_fileData[i][j]||'';
+            }
+            // if(obj[headerList[j]] != ''){
                 arr.push(obj);
             // }
         }
+        // console.log(_fileData)
+        // console.log(arr);
         this.tableHeader=headerList;
         this.cunZhengList=arr;
     },
@@ -110,7 +117,7 @@ export default {
                 let detail = [];
                 detail.push(detailLine);
                 // let detail=JSON.stringify(detailLine);//每一行  转字符串的detail
-                let filehash=sha256(JSON.stringify(detailLine)); //一行hash-》filehash
+                let filehash=sha256(JSON.stringify(detail)); //一行hash-》filehash
                 let fileObj={};
                 fileObj.filehash=filehash;
                 fileObj.detail=detail;
@@ -132,15 +139,20 @@ export default {
                 "filelist":that.newCunZheng
             })
             .then(function (response) {
-                setTimeout(() => {
-                    // loading.close();
+                if(response.data.error != '0'){
                     that.fullscreenLoading = false;
-                    that.$router.push({name:'confirm'});
-                }, 2000);
-                console.log(response);
+                    this.$message({type:'error',message:error});
+                }else{
+                    setTimeout(() => {
+                        that.fullscreenLoading = false;
+                        that.$router.push({name:'confirm'});
+                    }, 2000);
+                    console.log(response);
+                }
             })
             .catch(function (error) {
                 that.fullscreenLoading = false;
+                this.$message({type:'error',message:error});
                 console.log(error);
             });
         }

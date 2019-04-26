@@ -141,6 +141,7 @@ export default {
                 })
                 .catch((error)=> {
                     this.conloading = false;
+                    this.$message({type:'error',message:error});
                     console.log(error);
                 });
         },
@@ -153,15 +154,22 @@ export default {
                   {"hash":this.inputvalue})
                     .then( (response) =>{
                     this.loading = false;
-                    this.searchContent = response.data.result;
-                    this.searchContent.forEach(item =>{
-                        item._txhash=item.txhash.substring(0,10)+'.....'+item.txhash.substring(item.txhash.length-5);
-                        item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
-                    })
-                    this.allNum=response.data.result.length;
+                    if(response.data.result != ''){
+                        this.searchContent = response.data.result;
+                        this.searchContent.forEach(item =>{
+                            item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                            item._txhash=item.txhash.substring(0,10)+'.....'+item.txhash.substring(item.txhash.length-5);
+                            item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
+                        })
+                        this.allNum=this.searchContent.length;
+                    }else{
+                        this.searchContent = [];
+                        this.allNum=0;
+                    }
                 })
                 .catch( (error) =>{
                     this.loading = false;
+                    this.$message({type:'error',message:error});
                     console.log(error);
                 });
             }else{
@@ -170,9 +178,9 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                     }).then(() => {//确定
-                    
+                        window.location.reload();
                     }).catch(() => {
-                            
+                        window.location.reload();
                 });
             }
         },

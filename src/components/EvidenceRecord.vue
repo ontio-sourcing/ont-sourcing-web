@@ -4,7 +4,7 @@
         <div class="czDetailCon">
             <div class="buttons">
                 <el-button type="primary" round @click="back">返回</el-button>
-                <el-button type="primary" icon="el-icon-download" round @click="exporto">导出</el-button>
+                <el-button type="primary" id="exporto" icon="el-icon-download" round @click="exporto" @mouseover="changeMask">导出</el-button>
             </div>
             <div class="listDetail" v-loading="fullscreenLoading">
                 <p class="review">存证记录</p>
@@ -63,7 +63,7 @@
                     width="200"
                     align="center">
                         <template slot-scope="scope">
-                            <el-button @click="lookDetail(scope.$index)" type="text" size="small">点击查看</el-button>
+                            <el-button @click="lookDetail(scope.$index)" type="text" size="small">点击查看详情</el-button>
                         </template>
                     </el-table-column>
                 </el-table>  
@@ -121,11 +121,15 @@ export default {
                 this.totalNum = response.data.result;//存证记录总数量
             })
             .catch( (error) =>{
+                this.$message({type:'error',message:error});
                 console.log(error);
             });
         },
         back(){
             this.$router.push({name:'newEvidence'});
+        },
+        changeMask(){
+            document.getElementById("exporto").style.cursor="pointer"; 
         },
         exporto(){//导出
         /* generate workbook object from table */
@@ -162,7 +166,7 @@ export default {
                 "access_token": this.access_token,
                 "pageNum": this.nowPage,//页数
                 "pageSize": this.pageSize,//每页记录数 10以内 
-                "type":"INDEX"
+                // "type":"INDEX"
             })
             .then((response) =>{
                 this.fullscreenLoading = false;

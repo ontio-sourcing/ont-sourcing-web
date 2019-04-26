@@ -123,7 +123,7 @@ export default {
             }
         },
         download(){
-            window.open("www.baidu.com");
+            window.open('http://172.168.3.17/#/static/ontsourcing%E7%82%B9%E6%99%B4%E6%A8%A1%E6%9D%BF0426.xlsx');
         },
         toReview(){
             this.$router.push({name: 'reviewEvidence', params:{cunZheng: this.fileData}});
@@ -152,11 +152,14 @@ input.el-upload__input{
 li.el-upload-list__item.is-success{
     width: 25%;
 }
+.el-upload-list__item .el-icon-close{
+    color:#000;
+}
 .upload-demo{
     display: flex;
 }
 ul.el-upload-list.el-upload-list--text{
-    width: 100%;
+    width: 40%;
 }
 .el-step__title.is-process{
     font-weight: unset

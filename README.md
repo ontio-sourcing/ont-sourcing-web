@@ -49,7 +49,7 @@ method：POST
             "type": "INDEX",
             "detail": [
                 {
-                    "textList": ["2d校园","文本"，2d校园","文本"，2d校园","文本"...],
+                    "textLine": ["2d校园","文本"，2d校园","文本"，2d校园","文本"...],
                     "imageList":["56e481f7a93a924813440bee96b68f0742b014ed426b7535ad35d072984b2c0f",
                     "56e481f7a93a924813440bee96b68f0742b014ed426b7535ad35d072984b2c0f",
                     "56e481f7a93a924813440bee96b68f0742b014ed426b7535ad35d072984b2c0f"...]
@@ -87,7 +87,8 @@ method：POST
 }
 
 ```
-4.本体存证首页列表调用浏览器存证历史记录接口
+## 前端对接所用到的其他接口
+1.本体存证首页列表调用浏览器存证历史记录接口
 ```
 url：/api/v1/contract/explorer
 method：POST
@@ -98,7 +99,7 @@ method：POST
 }
 
 ```
-5.搜索调用浏览器根据hash取证接口
+2.搜索调用浏览器根据hash取证接口
 ```
 url：/api/v1/contract/explorer/hash
 method：POST
@@ -107,7 +108,7 @@ method：POST
     "hash":"111175b25e49f2767522d332057c3e6bb1144c842dce47913dc8222927999999"
 }
 ```
-6.存证记录根据登录获取到access_token调用 获取存证历史记录以及获取存证总条数接口,
+3.存证记录根据登录获取到access_token调用 获取存证历史记录以及获取存证总条数接口
 (1)获取存证总条数接口
 
 ```
@@ -132,7 +133,7 @@ method：POST
 }
 ```
 
-7.存证记录以及首页列表点击详情进入存证详情页面：通过登录取到的access_token以及存证编号 调用根据hash取证接口
+4.存证记录以及首页列表点击详情进入存证详情页面：通过登录取到的access_token以及存证编号 调用根据hash取证接口
 ```
 url：/api/v1/contract/hash
 method：POST
