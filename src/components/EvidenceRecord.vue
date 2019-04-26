@@ -9,7 +9,7 @@
             <div class="listDetail" v-loading="fullscreenLoading">
                 <p class="review">存证记录</p>
                 <el-table
-                    :default-sort = "{prop: 'date', order: 'descending'}"
+                    :default-sort = "{prop: 'createTime', order: 'descending'}"
                     class="my-table"
                     id="rebateSetTable"
                     :data="listDetail"
@@ -174,7 +174,8 @@ export default {
                 this.listDetail = response.data.result;
                 this.listDetail.forEach(item => {
                     item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
-                });
+                    item.timestamp = item.timestamp.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+               });
                 // console.log(this.listDetail)
                 
             })

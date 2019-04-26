@@ -14,6 +14,7 @@
             <p class="content_title">最新存证</p>
             <div class="content_data">
                 <el-table
+                    :default-sort = "{prop: 'createTime', order: 'descending'}"
                     v-loading="conloading"
                     :data="listContent"
                     style="width: 100%">
@@ -141,7 +142,6 @@ export default {
                 })
                 .catch((error)=> {
                     this.conloading = false;
-                    this.$message({type:'error',message:error});
                     console.log(error);
                 });
         },
