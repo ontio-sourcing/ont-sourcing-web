@@ -44,7 +44,7 @@ export default {
     },
     mounted(){
         this.access_token = sessionStorage.getItem('access_token');
-        this.ontId = sessionStorage.getItem('ontid');
+        this.ontId = sessionStorage.getItem('user_ontid');
         let _fileData = this.$route.params.cunZheng;
         // console.log(this.cunZhengList[0]);
         let headerList=_fileData[0];//第一行头部
@@ -134,8 +134,8 @@ export default {
             that.fullscreenLoading = true;
             console.log("存证：",that.newCunZheng);
             that.$http.post(process.env.API_ROOT+'api/v1/contract/put/batch',{
-                "user_ontid":this.ontId,
-                "access_token":this.access_token,
+                "user_ontid":that.ontId,
+                "access_token":that.access_token,
                 "filelist":that.newCunZheng
             })
             .then(function (response) {

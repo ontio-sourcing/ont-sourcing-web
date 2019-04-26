@@ -123,7 +123,8 @@ export default {
             }
         },
         download(){
-            window.open('http://172.168.3.17/#/static/ontsourcing%E7%82%B9%E6%99%B4%E6%A8%A1%E6%9D%BF0426.xlsx');
+            console.log(process.env.fileUrl)
+            window.open(process.env.fileUrl);
         },
         toReview(){
             this.$router.push({name: 'reviewEvidence', params:{cunZheng: this.fileData}});
