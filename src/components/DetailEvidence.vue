@@ -1,7 +1,7 @@
 <template>
     <div class="detailEvidence">
         <div class="topBar">
-            <img src="../assets/img/Rectangle.png" id="detailLogo" @mouseover="changeMask" alt="" @click="toHomePage">
+            <img src="../assets/img/Rectangle.png" id="detailLogo" alt="" @click="toHomePage">
         </div>
         <div class="detainCon" v-loading="fullscreenLoading">
             <div class="detailImg" v-if="haveImg">
@@ -106,6 +106,7 @@
 </template>
 <script>
 import { API_ROOT } from "../config";
+import dateFormat from '../util/dateFormat'
 export default {
   data() {
     return {
@@ -119,10 +120,7 @@ export default {
   methods:{
       toHomePage(){
           this.$router.push({name:'Home'})
-      },
-      changeMask(){
-      document.getElementById("detailLogo").style.cursor="pointer"; 
-    },
+      }
   },
   mounted(){
       this.fullscreenLoading = true;
@@ -137,7 +135,7 @@ export default {
             console.log(response);
             this.detailData = response.data.result[0];
             this.detailData._createTime = this.detailData.createTime.split('T')[0];
-            this.detailData.createTime = this.detailData.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+            this.detailData.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(this.detailData.createTime));
             // this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
             if(this.detailData.type == ''){//类型为空
                 this.haveImg = false;
@@ -286,6 +284,9 @@ html {
   margin: 2rem auto;
   padding: 3rem 0;
   font-size: 1.5rem;
+}
+#detailLogo{
+    cursor: pointer;
 }
 .img_title,.detail-title {
   font-size: 2rem;

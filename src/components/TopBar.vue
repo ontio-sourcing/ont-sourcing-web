@@ -1,11 +1,11 @@
 <template>
   <div id="topBar">
     <el-row type="flex" class="row-bg" justify="end" v-if="noLogin">
-      <el-col :span="16"><img id="logo" @mouseover="changeMask" src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
+      <el-col :span="16"><img id="logo" src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
       <el-col :span="8"><el-button type="info" size="mini" round @click="toLogin">我要存证</el-button></el-col>
     </el-row>
     <el-row type="flex" class="row-bg" justify="end" v-else>
-      <el-col :span="12"><img id="logo" @mouseover="changeMask" src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
+      <el-col :span="12"><img id="logo" src="../assets/img/Rectangle.png" alt="" @click="toHomePage"></el-col>
       <el-col :span="12" style="text-align:right;">
         <img src="../assets/img/avatar.png" style="width:3rem;" alt="">
         <span>{{username}}</span>
@@ -26,9 +26,6 @@ export default {
     }
   },
   methods:{
-    changeMask(){
-      document.getElementById("logo").style.cursor="pointer"; 
-    },
     toLogin(){//登录
       var callback_url = window.location.origin+'/#/newEvidence';
       var appontid = 'did:ont:ANqiHycikgyzkfz36faP5ymXLVg1uovhXh';
@@ -94,6 +91,9 @@ export default {
     line-height: 4rem;
     padding: 0 5rem;
     background: #fff;
+}
+#logo{
+  cursor: pointer;
 }
 .el-button--info {
     /* border-radius: 1rem;

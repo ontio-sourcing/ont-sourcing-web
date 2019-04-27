@@ -89,6 +89,7 @@ import TopBar from './TopBar'
 import data from './listContent.json'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
+import dateFormat from '../util/dateFormat'
 import {mapGetters} from 'vuex'
 export default {
     components:{
@@ -173,8 +174,10 @@ export default {
                 console.log(response);
                 this.listDetail = response.data.result;
                 this.listDetail.forEach(item => {
-                    item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
-                    item.timestamp = item.timestamp.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                    item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.createTime));
+                    item.timestamp = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.timestamp));
+                    // item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                    // item.timestamp = item.timestamp.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
                });
                 // console.log(this.listDetail)
                 

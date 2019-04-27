@@ -97,6 +97,7 @@
 <script>
 import {API_ROOT} from '../config'
 import TopBar from './TopBar'
+import dateFormat from '../util/dateFormat'
 // import Top from './Top'
 export default {
     components:{
@@ -135,7 +136,8 @@ export default {
                     console.log(response)
                     this.listContent = response.data.result;
                     this.listContent.forEach(item => {
-                        item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                        item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.createTime));
+                        // item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
                         item._txhash=item.txhash.substring(0,10)+'.....'+item.txhash.substring(item.txhash.length-5);
                         item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
                     });
@@ -147,7 +149,7 @@ export default {
         },
         //搜索内容
         search(){
-            if(this.inputvalue != ''){
+            if(this.inputvalue.trim() != ''){
                 this.firstFlag = false;//变成search内容
                 this.loading = true;
                 this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer/hash',
@@ -157,7 +159,7 @@ export default {
                     if(response.data.result != ''){
                         this.searchContent = response.data.result;
                         this.searchContent.forEach(item =>{
-                            item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
+                            item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.createTime));
                             item._txhash=item.txhash.substring(0,10)+'.....'+item.txhash.substring(item.txhash.length-5);
                             item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
                         })
