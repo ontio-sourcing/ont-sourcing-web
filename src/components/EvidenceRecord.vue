@@ -4,7 +4,7 @@
         <div class="czDetailCon">
             <div class="buttons">
                 <el-button type="primary" round @click="back">返回</el-button>
-                <el-button type="primary" id="exporto" icon="el-icon-download" round @click="exporto" @mouseover="changeMask">导出</el-button>
+                <el-button type="primary" id="exporto" icon="el-icon-download" round @click="exporto">导出</el-button>
             </div>
             <div class="listDetail" v-loading="fullscreenLoading">
                 <p class="review">存证记录</p>

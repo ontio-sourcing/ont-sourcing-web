@@ -97,8 +97,8 @@ export default {
       this.fullscreenLoading = true;
       this.hash = this.$route.params.id;
       console.log(this.hash);
-      this.$http.post('http://172.168.3.17:7088/api/v1/contract/explorer/hash',{
-                "access_token": this.access_token,
+      this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer/hash',{
+                // "access_token": this.access_token,
                 "hash":this.hash
         })
         .then((response) =>{
