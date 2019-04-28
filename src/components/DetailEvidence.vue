@@ -33,34 +33,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="detailImg" v-if="haveImg">
-                <div class="img_title">证书图片</div>
-                <div class="imgDetail">
-                    <div class="work-group">
-                        <div class="group">Group : </div>
-                        <div class="group">{{work.group}}</div>
-                    </div>
-                    <div class="work-name">{{work.name}}</div>
-                    <div class="work-trustAnchor">
-                        <div class="trustAnchor">Trust Anchor : </div>
-                        <div class="trustAnchor">{{work.anchor}}</div>
-                    </div>
-                    <div class="work-desc">
-                        <div class="desc">Description:{{work.desc}} </div>
-                    </div>
-                    <div class="work-crypto">
-                        <div class="crypto">crypto_function</div>
-                        <div class="upload">SHA256</div>
-                    </div>
-                    <div class="work-uploadtime">
-                        <div class="crypto">uploadTime</div>
-                        <div class="upload">{{work.uploadTime}}</div>
-                    </div>
-                    <div class="work-hash">
-                        <div class="hash">WorkHash:{{work.work_HASH}}</div>
-                    </div>
-                </div>
-            </div> -->
             <div class="detailCon">
                 <div style="padding:0 6%;">
                     <div class="detail-title">存证详情</div>
@@ -105,7 +77,6 @@
     </div>
 </template>
 <script>
-import { API_ROOT } from "../config";
 import dateFormat from '../util/dateFormat'
 export default {
   data() {

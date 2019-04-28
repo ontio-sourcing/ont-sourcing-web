@@ -19,7 +19,6 @@
 </template>
 <script>
 import TopBar from './TopBar'
-import { setTimeout } from 'timers';
 export default {
     components:{
         TopBar

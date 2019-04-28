@@ -5,10 +5,10 @@ import * as actions from './actions'
 import * as mutations from './mutations'
  
 Vue.use(Vuex)
-// 首先声明一个需要全局维护的状态 state,比如 我这里举例的resturantName
+// 首先声明一个需要全局维护的状态 state
 const state = {
-    evidenceRecord: [] // 存证记录
-    
+    loading:true,//加载
+    homePageRecord:[]//首页列表
 }
  
 // 注册上面引入的各大模块

@@ -1,9 +1,4 @@
 import axios from 'axios';
-import { Message } from 'element-ui';
-
-axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='';
-
 
 //http request 拦截器
 axios.interceptors.request.use(
@@ -11,8 +6,9 @@ axios.interceptors.request.use(
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
     config.data = JSON.stringify(config.data);
     config.headers = {
-      'Content-Type':'application/x-www-form-urlencoded'
+      'Content-Type':'application/json;charset=utf-8'
     }
+    config.headers["X-Requested-With"]="XMLHttpRequest";
     // if(token){
     //   config.params = {'token':token}
     // }
@@ -66,17 +62,18 @@ export function fetch(url,params={}){
 /**
  * 封装post请求
  * @param url
- * @param data
+ * @param params
  * @returns {Promise}
  */
 
- export function post(url,data = {}){
+ export function post(url,params = {}){
    return new Promise((resolve,reject) => {
-     axios.post(url,data)
+     axios.post(url,params)
           .then(response => {
-            resolve(response.data);
-          },err => {
-            reject(err)
+            resolve(response);
+          })
+          .catch(error=>{
+            reject(error)
           })
    })
  }

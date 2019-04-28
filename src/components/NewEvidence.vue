@@ -54,8 +54,6 @@ export default {
             fileList: [],//上传文件
             hasfile:true,//是否有文件上传
             fileData:[],//读取的excel内容
-            // fileDataHeader:[],//excel头部
-            activeBar:"first",
         }
     },
     components:{
@@ -99,7 +97,6 @@ export default {
                         });  //获得以第一列为键名的sheet数组对象 
                         // console.log(sheetArray);
                         this.fileData = sheetArray;
-                        // this.fileDataHeader = sheetArray[0];//excel的头部
                         if(this.fileData.length > 0){//有文件上传
                             this.hasfile = false;
                         }else{

@@ -25,7 +25,6 @@
 </template>
 <script>
 import TopBar from './TopBar'
-import data from './listContent.json'
 const sha256 = require("js-sha256").sha256;
 export default {
     data(){
@@ -36,7 +35,6 @@ export default {
             cunZhengList:[],
             tableHeader:[],
             newCunZheng:[],//提交给后台的hash的list
-            // cunZhengList:data
         }
     },
     components:{
@@ -55,16 +53,11 @@ export default {
             if(!c){
                 continue;
             }
-            console.log(c);
             for(let j=0,headLen=headerList.length;j<headLen;j++){
                 obj[headerList[j]]=_fileData[i][j]||'';
             }
-            // if(obj[headerList[j]] != ''){
-                arr.push(obj);
-            // }
+            arr.push(obj);
         }
-        // console.log(_fileData)
-        // console.log(arr);
         this.tableHeader=headerList;
         this.cunZhengList=arr;
     },
@@ -87,7 +80,6 @@ export default {
                 let imageList=[];//每一行存放的图片哈希值
                 let index=0;
                 for(var j in _cunZhengList[i]){
-                    
                     if(index<10){
                         textLine.push(_cunZhengList[i][j]);//文本
                         
@@ -109,8 +101,6 @@ export default {
                     }
                     index++;
                 }
-                // dateLine.push(imageList);
-                // console.log("textLine ",textLine);
                 detailLine.textLine = textLine;//文本
                 detailLine.imageList = imageList;//图片哈希
                 console.log('【detailLine】 ',detailLine);
@@ -124,7 +114,6 @@ export default {
                 fileObj.type = 'INDEX';//目录
                 newCunZheng.push(fileObj);
                 console.log('【newCunZheng】 ',JSON.stringify(newCunZheng));
-
             }
                 this.newCunZheng = newCunZheng;
                 this.postFileHashs();

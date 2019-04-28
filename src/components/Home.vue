@@ -1,21 +1,19 @@
 <template>
     <div class="home">
         <TopBar></TopBar>
-        <!-- <Top></Top> -->
         <div class="searchBar">
             <div class="searchInput">
                 <input v-model="inputvalue" @keyup.enter="search" type="text" autocomplete="off"
                placeholder="请输入存证编号" value="" id="id_hash" style="vertical-align: middle;">
                  <el-button size="small" type="primary" round class="searchIcon" @click="search">搜索</el-button>
             </div>
-            
         </div>
         <div class="content" v-if="firstFlag">
             <p class="content_title">最新存证</p>
             <div class="content_data">
                 <el-table
                     :default-sort = "{prop: 'createTime', order: 'descending'}"
-                    v-loading="conloading"
+                    v-loading="$store.state.loading"
                     :data="listContent"
                     style="width: 100%">
                     <el-table-column
@@ -95,58 +93,39 @@
     </div>
 </template>
 <script>
-import {API_ROOT} from '../config'
 import TopBar from './TopBar'
 import dateFormat from '../util/dateFormat'
-// import Top from './Top'
+import {mapGetters} from 'vuex'
 export default {
     components:{
         TopBar,
-        // Top
     },
     data(){
         return{
-            showLoading:false,
             firstFlag:true,//首次显示内容true false:搜索内容
             inputvalue:'',//输入框值
-            listContent:[],//内容值
-            // listContent:data,
+            // listContent:[],//内容值
             allNum:0,//信息条数
             searchContent:[],
             loading:false,//搜索加载
-            conloading:false,//首页列表加载
         }
     },
     created(){
         //请求首页列表
-        this.conloading = true;
-        this.getHomeData();
+        let params={"pageNum": 1,"pageSize": 10};
+        this.$store.dispatch('getHomePageRecord',params);
         //每隔10秒获取最新内容
-        this.intervalBlock = setInterval(this.getHomeData,10000);
+        this.intervalBlock = setInterval(()=>{
+            this.$store.dispatch('getHomePageRecord',params);
+        },10000);
     },
     beforeDestroy() {
-      clearInterval(this.intervalBlock)
+      clearInterval(this.intervalBlock);
+    },
+    computed:{
+        ...mapGetters({listContent:'getHomePageRecord'}) // 动态计算属性，相当于this.$store.getters.getHomePageRecord
     },
     methods:{
-        getHomeData(){//获取首页列表
-            this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer',{
-                "pageNum": 1,"pageSize": 10})
-                .then((response)=> {
-                    this.conloading = false;
-                    console.log(response)
-                    this.listContent = response.data.result;
-                    this.listContent.forEach(item => {
-                        item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.createTime));
-                        // item.createTime = item.createTime.replace(/^(\d{4}-\d{2}-\d{2})(T)(\d{2}:\d{2}:\d{2})(.*)$/,'$1 $3');
-                        item._txhash=item.txhash.substring(0,10)+'.....'+item.txhash.substring(item.txhash.length-5);
-                        item._ontId = item.ontid.substring(0,10)+'.....'+item.ontid.substring(item.ontid.length-5);
-                    });
-                })
-                .catch((error)=> {
-                    this.conloading = false;
-                    console.log(error);
-                });
-        },
         //搜索内容
         search(){
             if(this.inputvalue.trim() != ''){
@@ -222,9 +201,7 @@ button.el-button.el-button--default{
 .searchIcon{
     position: absolute;
     right: 2%;
-    /* top: 34%; */
     font-size: 1.2rem;
-    /* font-weight: bold; */
     float: right;
     top: 24%;
 }
@@ -266,11 +243,8 @@ input {
 .content_title{
     font-size: 2rem;
     text-align: center;
-    /* margin-top: 20px; */
     border-bottom: 1px solid #ddd;
-    /* margin: 20px auto; */
     height: 50px;
-    /* line-height: 50px; */
 }
 .el-row{
     text-align: center;
@@ -285,13 +259,8 @@ input {
     color: #3f4042;
 }
 .searchTop{
-    /* margin: 30px 0; */
     font-size: 2rem;
 }
-/* .search_title{
-    font-weight: bold;
-    font-size: 30px;
-} */
 .num{
     margin-left: 10px;
 }
