@@ -128,12 +128,10 @@ export default {
         back(){
             this.$router.push({name:'newEvidence'});
         },
-        changeMask(){
-            document.getElementById("exporto").style.cursor="pointer"; 
-        },
         exporto(){//导出
         /* generate workbook object from table */
-            let wb = XLSX.utils.table_to_book(document.querySelector('#rebateSetTable'));  //表格的id名
+            let xlsxParam = { raw: true };//转换成excel时，使用原始的格式
+            let wb = XLSX.utils.table_to_book(document.querySelector('#rebateSetTable'),xlsxParam);  //表格的id名
             /* get binary string as output */
             let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
             try {
@@ -204,6 +202,9 @@ export default {
     width: 80%;
     margin: 0 auto;
     margin: 2rem auto;
+}
+#exporto{
+    cursor: pointer;
 }
 .listDetail{
     margin: 0 auto;
