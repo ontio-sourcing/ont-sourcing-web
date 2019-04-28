@@ -17,7 +17,7 @@
                 </template>
             </el-table>
             <div class="reviewBottom">
-                <el-button type="primary" round class="back" size="medium" @click="back">返回</el-button>
+                <el-button type="primary" round class="back" @click="back">返回</el-button>
                 <el-button type="primary" round class="confirm" @click="confirm">确认提交</el-button>
             </div>
         </div>
