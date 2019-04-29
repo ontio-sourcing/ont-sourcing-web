@@ -98,9 +98,7 @@ export default {
       this.hash = this.$route.params.id;
       console.log(this.hash);
       this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer/hash',{
-                // "access_token": this.access_token,
-                "hash":this.hash
-        })
+                "hash":this.hash})
         .then((response) =>{
             this.fullscreenLoading = false;
             console.log(response);
