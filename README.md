@@ -1,4 +1,4 @@
-# falian_front
+# ont-sourcing-web
 
 > A Vue.js project
 
@@ -133,13 +133,12 @@ method：POST
 }
 ```
 
-4.存证记录以及首页列表点击详情进入存证详情页面：通过登录取到的access_token以及存证编号 调用根据hash取证接口
+4.存证记录以及首页列表点击详情进入存证详情页面：通过存证编号 调用浏览器根据hash取证接口
 ```
-url：/api/v1/contract/hash
+url：/api/v1/contract/explorer/hash
 method：POST
 
 {
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJkaWQ6b250OkFNdmpVV1o2Y25BQVVzQk43dWpBQnRMUzlHbWVoOFNQU2oiLCJpc3MiOiJkaWQ6b250OkFhdlJRcVhlOVByYVY1dFlnQnF2VjRiVXE4TFNzdmpjV1MiLCJleHAiOjE1NTUwNTU3MzksImlhdCI6MTU1NDk2OTMzOSwianRpIjoiZjQ1ZmMyMmVkMjBhNDFhMGE1YzdhMzZhYjIxZTkxNTAiLCJjb250ZW50Ijp7InR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJvbnRpZCI6ImRpZDpvbnQ6QU14clNHSHl4Z25XUzZxYzFRalROWWVFYXczWDNEdnpoZiJ9fQ.MDFiZDVhYWQ2MzRkNzlkOTU3ZjE3YWYyNDc3MDUyZGUxNzJjYjdmYjgxZWViOThmYTg2ODgyM2ZiYjM5ZjIyMjZiYWZlYTlkNGFkNjMwMzM0OWY4N2YyYzBiZDlmNzg5M2IzYjhiYjdkZTg1MjFmYzQ1MDMwOGY2NGRmM2E5ZjkwNg",
-    "hash":"e81475b25e49f2767522d332057c3e6bb1144c842dce47913dc8222927102c67"
+    "hash":"111175b25e49f2767522d332057c3e6bb1144c842dce47913dc8222927999999"
 }
 ```
