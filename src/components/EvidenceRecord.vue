@@ -9,7 +9,6 @@
             <div class="listDetail" v-loading="fullscreenLoading">
                 <p class="review">存证记录</p>
                 <el-table
-                    :default-sort = "{prop: 'createTime', order: 'descending'}"
                     class="my-table"
                     id="rebateSetTable"
                     :data="listDetail"

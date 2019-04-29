@@ -8,7 +8,7 @@
                     <div style="height: 400px;padding-left:2rem;padding-top:2rem;">
                         <el-steps direction="vertical" :active="0">
                             <el-step>
-                                <template slot="title">点击下载 <span @click="download" style="color:#409eff;text-decoration:underline;">存证模板Excel</span></template>
+                                <template slot="title">点击下载 <span id="download" @click="download" style="color:#409eff;text-decoration:underline;">存证模板Excel</span></template>
                             </el-step>
                             <el-step title="">
                                 <template slot="title">
@@ -135,6 +135,9 @@ export default {
     background: #fff;
     margin-top: 2rem;
     /* height: 550px; */
+}
+#download{
+    cursor: pointer;
 }
 .el-step__head.is-wait {
     color: #000;

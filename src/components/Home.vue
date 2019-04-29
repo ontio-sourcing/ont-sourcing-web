@@ -12,7 +12,6 @@
             <p class="content_title">最新存证</p>
             <div class="content_data">
                 <el-table
-                    :default-sort = "{prop: 'createTime', order: 'descending'}"
                     v-loading="$store.state.loading"
                     :data="listContent"
                     style="width: 100%">
