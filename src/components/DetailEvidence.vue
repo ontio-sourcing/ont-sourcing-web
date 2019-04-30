@@ -105,6 +105,7 @@ export default {
             this.detailData = response.data.result[0];
             this.detailData._createTime = this.detailData.createTime.split('T')[0];
             this.detailData.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(this.detailData.createTime));
+            this.detailData.timestamp = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(this.detailData.timestamp));
             // this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
             if(this.detailData.type == ''){//类型为空
                 this.haveImg = false;
