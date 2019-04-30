@@ -156,9 +156,9 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                     }).then(() => {//确定
-                        window.location.reload();
+                        this.firstFlag = true;
                     }).catch(() => {
-                        window.location.reload();
+                        this.firstFlag = true;
                 });
             }
         },
