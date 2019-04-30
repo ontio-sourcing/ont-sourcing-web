@@ -88,7 +88,6 @@ import TopBar from './TopBar'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 import dateFormat from '../util/dateFormat'
-import {mapGetters} from 'vuex'
 export default {
     components:{
         TopBar
@@ -116,12 +115,10 @@ export default {
             this.$http.post(process.env.API_ROOT+'api/v1/contract/count',{
                 "access_token": this.access_token})
             .then((response)=> {
-                console.log(response);
                 this.totalNum = response.data.result;//存证记录总数量
             })
             .catch( (error) =>{
                 this.$message({type:'error',message:error});
-                console.log(error);
             });
         },
         back(){
@@ -143,31 +140,19 @@ export default {
             return wbout
         },
         handleSizeChange(val) {//点击条数
-            // console.log(`每页 ${val} 条`);
-            // console.log(val);
             this.pageSize = val;
             this.handleCurrentChange(this.nowPage);
-            // this.listDetail = this.listDetail.slice(val*(this.nowPage-1),this.nowPage*val)
         },
         handleCurrentChange(val) {
-            // let params = {
-            //     "access_token": this.access_token,
-            //     "pageNum": val,//页数
-            //     "pageSize": this.pageSize,//每页记录数 10以内 
-            //     "type":"INDEX"
-            // }
-            // this.$store.dispatch('getEvidenceRecord',params);
             this.fullscreenLoading = true;
             this.nowPage = val;
             this.$http.post(process.env.API_ROOT+'api/v1/contract/history',{
                 "access_token": this.access_token,
                 "pageNum": this.nowPage,//页数
                 "pageSize": this.pageSize,//每页记录数 10以内 
-                // "type":"INDEX"
             })
             .then((response) =>{
                 this.fullscreenLoading = false;
-                console.log(response);
                 this.listDetail = response.data.result;
                 this.listDetail.forEach(item => {
                     item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(item.createTime));
@@ -176,16 +161,13 @@ export default {
             })
             .catch( (error)=> {
                 this.fullscreenLoading = false;
-                console.log(error);
+                this.$message({type:'error',message:error});
             });
         },
         lookDetail(index){
             this.$router.push({path:'/detailEvidence/'+this.listDetail[index].txhash});
         }
-    },
-    // computed:{
-    //     ...mapGetters({listDetail:'evidenceRecordGet'}) // 动态计算属性，相当于this.$store.getters.resturantName
-    // }
+    }
 }
 </script>
 <style scoped>

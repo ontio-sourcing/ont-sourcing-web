@@ -44,7 +44,6 @@ export default {
         this.access_token = sessionStorage.getItem('access_token');
         this.ontId = sessionStorage.getItem('user_ontid');
         let _fileData = this.$route.params.cunZheng;
-        // console.log(this.cunZhengList[0]);
         let headerList=_fileData[0];//第一行头部
         let arr=[];//
         for(let i=1,len=_fileData.length;i<len;i++){
@@ -113,32 +112,28 @@ export default {
                 fileObj.detail=detail;
                 fileObj.type = 'INDEX';//目录
                 newCunZheng.push(fileObj);
-                console.log('【newCunZheng】 ',JSON.stringify(newCunZheng));
             }
                 this.newCunZheng = newCunZheng;
                 this.postFileHashs();
         },
         postFileHashs(){
-            var that = this;
-            that.fullscreenLoading = true;
-            console.log("存证：",that.newCunZheng);
-            that.$http.post(process.env.API_ROOT+'api/v1/contract/put/batch',{
-                "user_ontid":that.ontId,
-                "access_token":that.access_token,
-                "filelist":that.newCunZheng
+            this.fullscreenLoading = true;
+            this.$http.post(process.env.API_ROOT+'api/v1/contract/put/batch',{
+                "user_ontid":this.ontId,
+                "access_token":this.access_token,
+                "filelist":this.newCunZheng
             })
             .then( (response)=> {
-                that.fullscreenLoading = false;
+                this.fullscreenLoading = false;
                 if(response.data.error != 0){
                     this.$message({type:'error',message:response.data.desc});
                 }else{
-                    that.$router.push({name:'confirm'});
+                    this.$router.push({name:'confirm'});
                 }
             })
             .catch( (error) =>{
-                that.fullscreenLoading = false;
+                this.fullscreenLoading = false;
                 this.$message({type:'error',message:error});
-                console.log(error);
             });
         }
     }
@@ -151,7 +146,6 @@ export default {
     margin-top: 2rem;
     background: #fff;
     padding-bottom: 2rem;
-    /* height: 550px;; */
 }
 .reviewContainer .review{
     font-size: 1.4rem;
@@ -169,7 +163,6 @@ export default {
     background:unset;
     color: #409eff;
     border-color: #409eff;
-    /* width: 8%; */
 }
 .el-table .cell{
     overflow: hidden !important;

@@ -96,17 +96,14 @@ export default {
   mounted(){
       this.fullscreenLoading = true;
       this.hash = this.$route.params.id;
-      console.log(this.hash);
       this.$http.post(process.env.API_ROOT+'api/v1/contract/explorer/hash',{
                 "hash":this.hash})
         .then((response) =>{
             this.fullscreenLoading = false;
-            console.log(response);
             this.detailData = response.data.result[0];
             this.detailData._createTime = this.detailData.createTime.split('T')[0];
             this.detailData.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(this.detailData.createTime));
             this.detailData.timestamp = dateFormat.format('yyyy-MM-dd hh:mm:ss',new Date(this.detailData.timestamp));
-            // this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
             if(this.detailData.type == ''){//类型为空
                 this.haveImg = false;
             }else if(this.detailData.type == 'IMAGE'){//图片
@@ -124,7 +121,6 @@ export default {
         .catch( (error)=> {
             this.fullscreenLoading = false;
             this.$message({type:'error',message:error});
-            console.log(error);
         });
   }
 };

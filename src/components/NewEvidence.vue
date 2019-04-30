@@ -95,7 +95,6 @@ export default {
                         const sheetArray = XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
                             header:1
                         });  //获得以第一列为键名的sheet数组对象 
-                        // console.log(sheetArray);
                         this.fileData = sheetArray;
                         if(this.fileData.length > 0){//有文件上传
                             this.hasfile = false;
@@ -111,12 +110,10 @@ export default {
                 }
             };
             fileReader.readAsBinaryString(file.raw);
-            // this.fileData = sheetArray;
         },
         changeTab(tab,event){//存证记录tab
             if(tab.index == 1){
-                // this.getCunZhengList();
-                this.$router.push({name:'evidenceRecord',params:sessionStorage.getItem('access_token')});
+                this.$router.push({name:'evidenceRecord'});
             }
         },
         download(){

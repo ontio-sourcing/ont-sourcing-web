@@ -103,7 +103,6 @@ export default {
         return{
             firstFlag:true,//首次显示内容true false:搜索内容
             inputvalue:'',//输入框值
-            // listContent:[],//内容值
             allNum:0,//信息条数
             searchContent:[],
             loading:false,//搜索加载
@@ -150,7 +149,6 @@ export default {
                 .catch( (error) =>{
                     this.loading = false;
                     this.$message({type:'error',message:error});
-                    console.log(error);
                 });
             }else{
                 this.$confirm('请输入存证编号进行搜索','提示', {
