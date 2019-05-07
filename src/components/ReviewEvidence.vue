@@ -34,7 +34,7 @@ export default {
   },
   mounted() {
     this.access_token = sessionStorage.getItem('access_token');
-    this.ontId = sessionStorage.getItem('user_ontid');
+    this.ontId = sessionStorage.getItem('ontid');
     let _fileData = this.$route.params.cunZheng;
     let headerList = _fileData[0];//第一行头部
     let arr = [];//

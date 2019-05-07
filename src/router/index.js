@@ -67,7 +67,7 @@ router.beforeEach(async (to, from, next) => {
     let result = to.query.result
     if (result) {
       let response = JSON.parse(decodeURIComponent(to.query.result))
-      sessionStorage.setItem("user_ontid", response.user_ontid);
+      sessionStorage.setItem("ontid", response.ontid);
       sessionStorage.setItem("access_token", response.access_token);
       next()
       return
