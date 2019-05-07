@@ -38,6 +38,7 @@ export default {
       var appname = 'OntSourcing';
       var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url + '&' + 'zh');
       window.location.href = "http://139.219.136.188:10390?params=" + value;
+      // window.location.href = "http://signin.ont.io?params=" + value;
     },
     toNewEvidence() {
       this.$router.push({ name: 'newEvidence' });
@@ -56,7 +57,7 @@ export default {
         type: 'warning'
       }).then(() => {//确定
         this.noLogin = true,//默认未登录
-          sessionStorage.removeItem("user_ontid");
+          sessionStorage.removeItem("ontid");
         sessionStorage.removeItem("access_token");
         this.$router.push({ name: 'Home' });
       }).catch(() => {
@@ -66,19 +67,28 @@ export default {
     }
   },
   mounted() {//得到token值保存session
-    if (sessionStorage.getItem("user_ontid")) {
+    if (sessionStorage.getItem("ontid")) {
       this.noLogin = false;
-      this.username = sessionStorage.getItem("user_ontid");
+      this.username = sessionStorage.getItem("ontid");
+      if (sessionStorage.getItem("ontid") == undefined) {
+        this.$message({ type: 'error', message: '登录失败，请重试！' });
+        this.$router.push({ name: 'Home' });
+        return
+      }
     }
     else {
       var result = this.$route.query.result;
-      console.log('result', result);
-      
+
       if (result) {
         var response = JSON.parse(decodeURIComponent(result));
-        sessionStorage.setItem("user_ontid", response.user_ontid);
+        if (!response.ontid || !response.access_token) {
+          this.$message({ type: 'error', message: '登录失败，请重试！' });
+          this.$router.push({ name: 'Home' });
+          return
+        }
+        sessionStorage.setItem("ontid", response.ontid);
         sessionStorage.setItem("access_token", response.access_token);
-        this.username = sessionStorage.getItem("user_ontid");
+        this.username = sessionStorage.getItem("ontid");
         this.noLogin = false;
       }
     }
