@@ -37,8 +37,8 @@ export default {
       var appontid = 'did:ont:ANqiHycikgyzkfz36faP5ymXLVg1uovhXh';
       var appname = 'OntSourcing';
       var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url + '&' + 'zh');
-      window.location.href = "http://139.219.136.188:10390?params=" + value;
-      // window.location.href = "http://signin.ont.io?params=" + value;
+      // window.location.href = "http://139.219.136.188:10390?params=" + value;
+      window.location.href = "http://signin.ont.io?params=" + value;
     },
     toNewEvidence() {
       this.$router.push({ name: 'newEvidence' });
@@ -70,11 +70,6 @@ export default {
     if (sessionStorage.getItem("ontid")) {
       this.noLogin = false;
       this.username = sessionStorage.getItem("ontid");
-      if (sessionStorage.getItem("ontid") == undefined) {
-        this.$message({ type: 'error', message: '登录失败，请重试！' });
-        this.$router.push({ name: 'Home' });
-        return
-      }
     }
     else {
       var result = this.$route.query.result;
