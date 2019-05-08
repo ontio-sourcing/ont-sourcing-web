@@ -34,9 +34,9 @@ export default {
   methods: {
     toLogin() {//登录
       var callback_url = window.location.origin + '/#/newEvidence';
-      var appontid = 'did:ont:ANqiHycikgyzkfz36faP5ymXLVg1uovhXh';
+      // var appontid = 'did:ont:ANqiHycikgyzkfz36faP5ymXLVg1uovhXh';
       var appname = 'OntSourcing';
-      var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url + '&' + 'zh');
+      var value = window.encodeURIComponent(process.env.APP_ONTID + '&' + appname + '&' + callback_url + '&' + 'zh');
       // window.location.href = "http://139.219.136.188:10390?params=" + value;
       window.location.href = process.env.ONTID_SIGININ + value;
     },

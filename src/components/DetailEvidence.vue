@@ -133,7 +133,11 @@ export default {
           this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
         } else if (this.detailData.type == 'INDEX') {//目录
           this.haveImg = true;
-          this.workData = JSON.parse(this.detailData.detail)[0].textLine;
+          let textData = JSON.parse(this.detailData.detail)[0].textLine;
+          if(!textData) {
+            textData = JSON.parse(this.detailData.detail)[0].textline;
+          }
+          this.workData = textData;
           var imgHashData = JSON.parse(this.detailData.detail)[0].imageList;
           for (var i in imgHashData) {
             this.workData.push(imgHashData[i]);//图片哈希
