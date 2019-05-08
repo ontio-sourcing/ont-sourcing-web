@@ -38,7 +38,7 @@ export default {
       var appname = 'OntSourcing';
       var value = window.encodeURIComponent(appontid + '&' + appname + '&' + callback_url + '&' + 'zh');
       // window.location.href = "http://139.219.136.188:10390?params=" + value;
-      window.location.href = "http://signin.ont.io?params=" + value;
+      window.location.href = process.env.ONTID_SIGNIN + value;
     },
     toNewEvidence() {
       this.$router.push({ name: 'newEvidence' });
