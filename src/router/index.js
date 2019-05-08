@@ -55,13 +55,6 @@ function jumpTo(target, origin, next) {
 // Route guard judges access_token
 router.beforeEach(async (to, from, next) => {
 
-  let detailFlag = sessionStorage.getItem("detail_flag");
-  if (detailFlag) {
-    next()
-    sessionStorage.removeItem("detail_flag");
-    return
-  }
-
   let toPath = to.name
   if (toPath === 'newEvidence') {
     let result = to.query.result
@@ -72,7 +65,11 @@ router.beforeEach(async (to, from, next) => {
       next()
       return
     }
+  } else if (toPath === 'detailEvidence') {
+    next()
+    return
   }
+
 
   let access_token = sessionStorage.getItem("access_token");
   // if no access_token then go web_home

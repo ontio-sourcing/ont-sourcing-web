@@ -124,11 +124,11 @@ export default {
       }
     },
     lookConDetail(index) {//内容点击详情
-      sessionStorage.setItem("detail_flag", this.detailFlag)
+      // sessionStorage.setItem("detail_flag", this.detailFlag)
       this.$router.push({ path: '/detailEvidence/' + this.listContent[index].txhash });
     },
     lookSearDetail(index) {//搜索点击详情
-      sessionStorage.setItem("detail_flag", this.detailFlag)
+      // sessionStorage.setItem("detail_flag", this.detailFlag)
       this.$router.push({ path: '/detailEvidence/' + this.searchContent[index].txhash });
     }
   }
