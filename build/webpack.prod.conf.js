@@ -19,6 +19,9 @@ switch (process.env.NODE_ENV) {
   case 'test':
     env = require('../config/test.env');
     break;
+  case 'pre':
+    env = require('../config/pre.env');
+    break;
 
   default:
     break;

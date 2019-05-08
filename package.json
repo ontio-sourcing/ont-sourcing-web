@@ -12,7 +12,8 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build:prod": "cross-env NODE_ENV=production node build/build.js",
-    "build:test": "cross-env NODE_ENV=test node build/build.js"
+    "build:test": "cross-env NODE_ENV=test node build/build.js",
+    "build:pre": "cross-env NODE_ENV=pre node build/build.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
