@@ -87,7 +87,8 @@ router.beforeEach(async (to, from, next) => {
       sessionStorage.clear()
       jumpTo({ name: 'Home' }, to, next)
     } else {
-      sessionStorage.setItem('TYPE', res.data.result)
+      // sessionStorage.setItem('TYPE', res.data.result)
+      sessionStorage.setItem('TYPE', '2b')
       next()
     }
   } catch (error) {
