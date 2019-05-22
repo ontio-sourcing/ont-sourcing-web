@@ -55,6 +55,7 @@
 import TopBar from './TopBar'
 import dateFormat from '../util/dateFormat'
 import { mapGetters } from 'vuex'
+// import { clearInterval } from 'timers';
 export default {
   components: {
     TopBar,
@@ -66,20 +67,37 @@ export default {
       allNum: 0,//信息条数
       searchContent: [],
       loading: false,//搜索加载
-      detailFlag: true
+      detailFlag: true,
+      type: '',
+      searchUrl: '',
+      intervalBlock2c: null,
+      intervalBlock2b: null
     }
   },
   created() {
     //请求首页列表
     let params = { "pageNum": 1, "pageSize": 10 };
-    this.$store.dispatch('getHomePageRecord', params);
-    //每隔10秒获取最新内容
-    this.intervalBlock = setInterval(() => {
+    this.type = sessionStorage.getItem('TYPE')
+    if (this.type === '2c') {
+      this.$store.dispatch('get2cHomeData', params);
+      
+      clearInterval(this.intervalBlock2b)
+      this.intervalBlock2c = setInterval(() => {
+        this.$store.dispatch('get2cHomeData', params);
+      }, 10000);
+      this.searchUrl = process.env.TOC_API_ROOT+'api/v1/c/attestation/explorer/hash'
+    } else {
       this.$store.dispatch('getHomePageRecord', params);
-    }, 10000);
+      clearInterval(this.intervalBlock2c)
+      this.intervalBlock2b = setInterval(() => {
+        this.$store.dispatch('getHomePageRecord', params);
+      }, 10000);
+      this.searchUrl = process.env.API_ROOT + 'api/v1/contract/explorer/hash'
+    }
   },
   beforeDestroy() {
-    clearInterval(this.intervalBlock);
+    clearInterval(this.intervalBlock2c);
+    clearInterval(this.intervalBlock2b);
   },
   computed: {
     ...mapGetters({ listContent: 'getHomePageRecord' }) // 动态计算属性，相当于this.$store.getters.getHomePageRecord
@@ -90,27 +108,7 @@ export default {
       if (this.inputvalue.trim() != '') {
         this.firstFlag = false;//变成search内容
         this.loading = true;
-        this.$http.post(process.env.API_ROOT + 'api/v1/contract/explorer/hash',
-          { "hash": this.inputvalue })
-          .then((response) => {
-            this.loading = false;
-            if (response.data.result != '') {
-              this.searchContent = response.data.result;
-              this.searchContent.forEach(item => {
-                item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(item.createTime));
-                item._txhash = item.txhash.substring(0, 10) + '.....' + item.txhash.substring(item.txhash.length - 5);
-                item._ontId = item.ontid.substring(0, 10) + '.....' + item.ontid.substring(item.ontid.length - 5);
-              })
-              this.allNum = this.searchContent.length;
-            } else {
-              this.searchContent = [];
-              this.allNum = 0;
-            }
-          })
-          .catch((error) => {
-            this.loading = false;
-            this.$message({ type: 'error', message: error });
-          });
+        this.getSearchData()
       } else {
         this.$confirm('请输入存证编号进行搜索', '提示', {
           confirmButtonText: '确定',
@@ -124,12 +122,33 @@ export default {
       }
     },
     lookConDetail(index) {//内容点击详情
-      // sessionStorage.setItem("detail_flag", this.detailFlag)
       this.$router.push({ path: '/detailEvidence/' + this.listContent[index].txhash });
     },
     lookSearDetail(index) {//搜索点击详情
-      // sessionStorage.setItem("detail_flag", this.detailFlag)
       this.$router.push({ path: '/detailEvidence/' + this.searchContent[index].txhash });
+    },
+    getSearchData() {
+      this.$http.post(this.searchUrl,
+        { "hash": this.inputvalue })
+        .then((response) => {
+          this.loading = false;
+          if (response.data.result != '') {
+            this.searchContent = response.data.result;
+            this.searchContent.forEach(item => {
+              item.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(item.createTime));
+              item._txhash = item.txhash.substring(0, 10) + '.....' + item.txhash.substring(item.txhash.length - 5);
+              item._ontId = item.ontid.substring(0, 10) + '.....' + item.ontid.substring(item.ontid.length - 5);
+            })
+            this.allNum = this.searchContent.length;
+          } else {
+            this.searchContent = [];
+            this.allNum = 0;
+          }
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.$message({ type: 'error', message: error });
+        });
     }
   }
 }

@@ -59,6 +59,7 @@ export default {
         this.noLogin = true,//默认未登录
           sessionStorage.removeItem("ontid");
         sessionStorage.removeItem("access_token");
+        sessionStorage.clear();
         this.$router.push({ name: 'Home' });
       }).catch(() => {
 

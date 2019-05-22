@@ -108,46 +108,58 @@ export default {
       hash: '',
       workData: [],//图片上的内容
       detailData: {},//详情数据
+      toUrl: ''
     };
   },
   methods: {
     toHomePage() {
       this.$router.push({ name: 'Home' })
+    },
+    getDetail() {
+      this.$http.post(this.toUrl, {
+        'hash': this.hash      })
+        .then((response) => {
+          this.fullscreenLoading = false;
+          this.detailData = response.data.result[0];
+          this.detailData._createTime = this.detailData.createTime.split('T')[0];
+          this.detailData.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(this.detailData.createTime));
+          this.detailData.timestamp = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(this.detailData.timestamp));
+          if (this.detailData.type == '') {//类型为空
+            this.haveImg = false;
+          } else if (this.detailData.type == 'IMAGE') {//图片
+            this.haveImg = false;
+            this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
+          } else if (this.detailData.type == 'INDEX') {//目录
+            this.haveImg = true;
+            let textData = JSON.parse(this.detailData.detail)[0].textLine;
+            if (!textData) {
+              textData = JSON.parse(this.detailData.detail)[0].textline;
+            }
+            this.workData = textData;
+            var imgHashData = JSON.parse(this.detailData.detail)[0].imageList;
+            for (var i in imgHashData) {
+              this.workData.push(imgHashData[i]);//图片哈希
+            }
+          } else if (this.detailData.type == 'TEXT') {
+            this.haveImg = false;
+          }
+        })
+        .catch((error) => {
+          this.fullscreenLoading = false;
+          this.$message({ type: 'error', message: error });
+        });
     }
   },
   mounted() {
     this.fullscreenLoading = true;
     this.hash = this.$route.params.id;
-    this.$http.post(process.env.API_ROOT + 'api/v1/contract/explorer/hash', {
-      'hash': this.hash    })
-      .then((response) => {
-        this.fullscreenLoading = false;
-        this.detailData = response.data.result[0];
-        this.detailData._createTime = this.detailData.createTime.split('T')[0];
-        this.detailData.createTime = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(this.detailData.createTime));
-        this.detailData.timestamp = dateFormat.format('yyyy-MM-dd hh:mm:ss', new Date(this.detailData.timestamp));
-        if (this.detailData.type == '') {//类型为空
-          this.haveImg = false;
-        } else if (this.detailData.type == 'IMAGE') {//图片
-          this.haveImg = false;
-          this.detailData.imgUrl = JSON.parse(this.detailData.detail)[0].imgUrl;
-        } else if (this.detailData.type == 'INDEX') {//目录
-          this.haveImg = true;
-          let textData = JSON.parse(this.detailData.detail)[0].textLine;
-          if(!textData) {
-            textData = JSON.parse(this.detailData.detail)[0].textline;
-          }
-          this.workData = textData;
-          var imgHashData = JSON.parse(this.detailData.detail)[0].imageList;
-          for (var i in imgHashData) {
-            this.workData.push(imgHashData[i]);//图片哈希
-          }
-        }
-      })
-      .catch((error) => {
-        this.fullscreenLoading = false;
-        this.$message({ type: 'error', message: error });
-      });
+    let type = sessionStorage.getItem('TYPE')
+    if (type === '2c') {
+      this.toUrl = process.env.TOC_API_ROOT + 'api/v1/c/attestation/explorer/hash'
+    } else {
+      this.toUrl = process.env.API_ROOT + 'api/v1/contract/explorer/hash'
+    }
+    this.getDetail()
   }
 };
 </script>

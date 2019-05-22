@@ -80,13 +80,14 @@ router.beforeEach(async (to, from, next) => {
   }
 
   try {
-    let res = await axios.post(process.env.API_ROOT + 'api/v1/contract/token/check', {
+    let res = await axios.post(process.env.API_ROOT + 'api/v1/token/check', {
       access_token
     })
     if (!res.data.result) {
       sessionStorage.clear()
       jumpTo({ name: 'Home' }, to, next)
     } else {
+      sessionStorage.setItem('TYPE', res.data.result)
       next()
     }
   } catch (error) {

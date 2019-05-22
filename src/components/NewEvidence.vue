@@ -79,7 +79,6 @@ export default {
       fileReader.onload = (ev) => {
         try {
           //判断上传的是否是excel文件
-          // console.log(file.raw.name);
           for (var i in fileList) {
             if (!/\.(xls|xlsx)$/.test(fileList[i].name)) {
               this.$confirm('文件类型不正确，请上传Excel的文件格式！', '提示', {

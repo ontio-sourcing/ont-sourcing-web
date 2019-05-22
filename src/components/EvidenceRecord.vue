@@ -20,7 +20,13 @@
           <el-table-column prop="height" label="区块高度" width="100" align="center"></el-table-column>
           <el-table-column prop="timestamp" label="时间戳" width="300" align="center"></el-table-column>
           <el-table-column prop="ontid" label="存证者ONTID" width="400" align="center"></el-table-column>
-          <el-table-column prop="companyOntid" label="被存证者ONTID" width="400" align="center"></el-table-column>
+          <el-table-column
+            prop="companyOntid"
+            v-if="isShow"
+            label="被存证者ONTID"
+            width="400"
+            align="center"
+          ></el-table-column>
           <el-table-column prop="type" label="类型" width="100" align="center"></el-table-column>
           <el-table-column type="text" label="存证详情" width="200" align="center">
             <template slot-scope="scope">
@@ -64,17 +70,30 @@ export default {
       nowPage: 1,
       activeBar: "first",
       access_token: '',
+      url: '',
+      totalUrl: '',
+      isShow: true
     }
   },
   mounted() {
     this.listDetail = this.listDetail.slice(0, this.pageSize);
     this.access_token = sessionStorage.getItem('access_token');
+    let type = sessionStorage.getItem('TYPE')
+    if (type === '2c') {
+      this.isShow = false
+      this.url = process.env.TOC_API_ROOT + 'api/v1/c/attestation/history'
+      this.totalUrl = process.env.TOC_API_ROOT + 'api/v1/c/attestation/count'
+    } else {
+      this.url = process.env.API_ROOT + 'api/v1/contract/history'
+      this.totalUrl = process.env.API_ROOT + 'api/v1/contract/count'
+    }
     this.getTotalNum(this.access_token);//获取总数
     this.handleCurrentChange(1);//默认获取第一页
+
   },
   methods: {
     getTotalNum(access_token) {
-      this.$http.post(process.env.API_ROOT + 'api/v1/contract/count', {
+      this.$http.post(this.totalUrl, {
         "access_token": this.access_token      })
         .then((response) => {
           this.totalNum = response.data.result;//存证记录总数量
@@ -107,7 +126,7 @@ export default {
     handleCurrentChange(val) {
       this.fullscreenLoading = true;
       this.nowPage = val;
-      this.$http.post(process.env.API_ROOT + 'api/v1/contract/history', {
+      this.$http.post(this.url, {
         "access_token": this.access_token,
         "pageNum": this.nowPage,//页数
         "pageSize": this.pageSize,//每页记录数 10以内 
